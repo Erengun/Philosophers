@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/egun/Desktop/Philosophers/ft_printf/colors.h
+
+/Users/egun/Desktop/Philosophers/ft_printf/ft_printf.h
+unistd.h
+-
+stdarg.h
+-
+libft/libft.h
+/Users/egun/Desktop/Philosophers/ft_printf/libft/libft.h
+stdlib.h
+-
+colors.h
+/Users/egun/Desktop/Philosophers/ft_printf/colors.h
+
+/Users/egun/Desktop/Philosophers/ft_printf/libft/libft.h
+unistd.h
+-
+stdlib.h
+-
+
+/Users/egun/Desktop/Philosophers/main.c
+ft_printf/ft_printf.h
+/Users/egun/Desktop/Philosophers/ft_printf/ft_printf.h
+unistd.h
+-
+pthread.h
+-
+
