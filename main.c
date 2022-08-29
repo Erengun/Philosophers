@@ -3,25 +3,32 @@
 #include <pthread.h>
 #include "colors.h"
 
-void *th_fun(void *asd)
-{
+int mails = 0;
 
-	printf("Greetings from 42\n");
-	sleep(2);
-	printf("End test\n");
+void* routine()
+{
+	for (int i = 0; i < 100000; i++) {
+		mails++;
+	}
+	// In this example the excepted output is 200k but we get a output around 103k
 	return NULL;
 }
 
 int main(void)
 {
-	pthread_t id1, id2;
-	printf(RED"Before Thread\n"RST);
-	th_fun(NULL);
-	th_fun(NULL);
-	printf(CYN"After Thread\n"RST);
-	pthread_create(&id1, NULL, &th_fun, NULL);
-	pthread_create(&id2, NULL, &th_fun, NULL);
-	pthread_join(id1, NULL);
-	pthread_join(id2, NULL);
+	pthread_t p1, p2;
+	if (pthread_create(&p1, NULL, &routine, NULL) != 0) {
+		return 1;
+	}
+	if (pthread_create(&p2, NULL, &routine, NULL) != 0) {
+		return 2;
+	}
+	if (pthread_join(p1, NULL) != 0) {
+		return 3;
+	}
+	if (pthread_join(p2, NULL) != 0) {
+		return 4;
+	}
+	printf(CYN"You have "RED"%d"CYN" mails"RST, mails);
 	return 0;
 }
