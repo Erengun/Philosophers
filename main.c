@@ -2,41 +2,28 @@
 #include <unistd.h>
 #include <pthread.h>
 #include "colors.h"
+#include <time.h>
+#include <stdlib.h>
 
-int mails = 0;
-pthread_mutex_t mutex;
 
-void* routine()
+void* roll_dice()
 {
-	for (int i = 0; i < 100000; i++) {
-		pthread_mutex_lock(&mutex);
-		mails++;
-		pthread_mutex_unlock(&mutex);
-	}
-	// When we lock mutexes we get the true value of 200k
-	return NULL;
+	int value = (rand() % 6) + 1;
+	int *num = malloc(sizeof(int));
+	*num = value;
+	return (void *) num;
 }
 
 int main(void)
 {
-	// Create threads in loop
-	pthread_t p[4];
-	pthread_mutex_init(&mutex, NULL);
-	int i = 0;
-	while (i < 4)
-	{
-		if (pthread_create(&p[i], NULL, &routine, NULL) != 0)
-			return 1;
-		i++;
-	}
-	i = 0;
-	while (i < 4)
-	{
-		if (pthread_join(p[i], NULL) != 0)
-			return 2;
-		i++;
-	}
-	pthread_mutex_destroy(&mutex);
-	printf(CYN"You have "RED"%d"CYN" mails"RST, mails);
+	pthread_t th;
+	int* res;
+	srand(time(NULL));
+	if (pthread_create(&th, NULL, roll_dice, NULL) != 0)
+		return 1;
+	if (pthread_join(th, (void **)&res) != 0)
+		return 2;
+	printf("Dice rolled value is %d", *res);
+	free(res);
 	return 0;
 }
