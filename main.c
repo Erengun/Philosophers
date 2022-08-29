@@ -26,9 +26,14 @@ int main(void)
 	while (i < 4)
 	{
 		if (pthread_create(&p[i], NULL, &routine, NULL) != 0)
-			return i;
+			return 1;
+		i++;
+	}
+	i = 0;
+	while (i < 4)
+	{
 		if (pthread_join(p[i], NULL) != 0)
-			return i + 4;
+			return 2;
 		i++;
 	}
 	pthread_mutex_destroy(&mutex);
