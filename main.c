@@ -19,22 +19,19 @@ void* routine()
 
 int main(void)
 {
-	pthread_t p1, p2;
+	// Create threads in loop
+	pthread_t p[4];
 	pthread_mutex_init(&mutex, NULL);
-	if (pthread_create(&p1, NULL, &routine, NULL) != 0) {
-		return 1;
-	}
-	if (pthread_create(&p2, NULL, &routine, NULL) != 0) {
-		return 2;
-	}
-	if (pthread_join(p1, NULL) != 0) {
-		return 3;
-	}
-	if (pthread_join(p2, NULL) != 0) {
-		return 4;
+	int i = 0;
+	while (i < 4)
+	{
+		if (pthread_create(&p[i], NULL, &routine, NULL) != 0)
+			return i;
+		if (pthread_join(p[i], NULL) != 0)
+			return i + 4;
+		i++;
 	}
 	pthread_mutex_destroy(&mutex);
 	printf(CYN"You have "RED"%d"CYN" mails"RST, mails);
-
 	return 0;
 }
