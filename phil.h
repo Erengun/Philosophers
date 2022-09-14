@@ -23,7 +23,6 @@ struct s_arg;
 
 typedef struct s_philo
 {
-	//https://stackoverflow.com/questions/4394079/structs-that-refer-to-each-other
 	struct s_arg	*arg;
 
 	pthread_t 		ph;
@@ -37,6 +36,7 @@ typedef struct s_philo
 	int 			l_fork;
 	int 			r_fork;
 	t_long			last_eat;
+	t_long			dead_limit;
 }	t_philo;
 
 typedef struct s_arg
