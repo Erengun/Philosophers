@@ -6,7 +6,7 @@
 /*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 16:12:07 by egun              #+#    #+#             */
-/*   Updated: 2022/09/09 14:14:24 by egun             ###   ########.fr       */
+/*   Updated: 2022/09/12 15:04:14 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	philo_init(t_arg *arg)
 		arg->philo[i].l_fork = i;
 		arg->philo[i].r_fork = (i + 1) % arg->total_philos;
 		arg->philo[i].eat_number = 0;
-		pthread_mutex_init(&arg->philo[i].dead_mutex, NULL);
+		pthread_mutex_init(&arg->philo[i].boss, NULL);
 		pthread_mutex_init(&arg->philo[i].eat_mutex, NULL);
 		pthread_mutex_lock(&arg->philo[i].eat_mutex);
 		i++;
@@ -42,7 +42,7 @@ int	*mutex_init(t_arg *arg)
 	i = -1;
 	while (++i < arg->total_philos)
 		pthread_mutex_init(forks[i], NULL);
-	pthread_mutex_init(arg->philo->dead_mutex, NULL);
+	pthread_mutex_init(&arg->philo->boss, NULL);
 	return (0);
 }
 

@@ -11,29 +11,32 @@
 
 # define FORK_TAKEN 41
 # define FORK_BREAK 42
-# define ERROR -1
+# define EAT		0
+# define SLEEP		1
+# define THINK		2
+# define DIE		3
+# define ERROR 		-1
 
 typedef long long	t_long;
 
 typedef struct s_philo
 {
-	pthread_t ph;
-	int	id;
-	int left_f;
-	int right_f;
-}	t_philo;
-
-typedef struct s_mutex
-{
+	pthread_t 		ph;
+	int				id;
 	pthread_mutex_t *forks;
-
-}	t_mutex;
-
+	pthread_mutex_t boss;
+	pthread_mutex_t arg_mutex;
+	pthread_mutex_t eat_mutex;
+	int 			is_eating;
+	int				eat_number;
+	int 			l_fork;
+	int 			r_fork;
+	t_long			last_eat;
+}	t_philo;
 
 typedef struct s_arg
 {
 	t_philo *philo;
-	t_mutex *mutex;
 	t_long	total_philos;
 	t_long	count_philos;
 	t_long	time_to_die;
@@ -41,8 +44,13 @@ typedef struct s_arg
 	t_long	time_to_sleep;
 	t_long	eat_limit;
 	t_long	eat_count;
+	t_long	start_time;
 }	t_arg;
 
-long long	ft_arginit(char *str, long long *res);
-
+int			av_init(t_arg *arg, char** av, int ac);
+int 		ft_arginit(char *str, long long *res);
+t_long		get_tick_count(void);
+int			destroy(t_arg *arg);
+void		ft_error(char *msg, int flag, t_arg *arg);
+int			*mutex_init(t_arg *arg);
 #endif

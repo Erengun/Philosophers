@@ -6,11 +6,27 @@
 /*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 21:50:26 by egun              #+#    #+#             */
-/*   Updated: 2022/09/04 20:12:52 by egun             ###   ########.fr       */
+/*   Updated: 2022/09/09 14:06:59 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "phil.h"
+
+t_long	get_tick_count(void)
+{
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+int	destroy(t_arg *arg)
+{
+	free(arg->philo);
+	free(arg->mutex);
+	free(arg);
+	return (0);
+}
 
 int	ft_isdigit(int c)
 {
@@ -44,7 +60,7 @@ long long	ft_atol(const char *str)
 	return (number);
 }
 
-long long	ft_arginit(char *str, long long *res)
+int	ft_arginit(char *str, long long *res)
 {
 	if (!str)
 		return (ERROR);
