@@ -9,8 +9,6 @@
 # include <string.h>
 # include "colors.h"
 
-# define FORK_TAKEN 41
-# define FORK_BREAK 42
 # define EAT		0
 # define SLEEP		1
 # define FORK		2
@@ -21,8 +19,13 @@
 
 typedef long long	t_long;
 
+struct s_arg;
+
 typedef struct s_philo
 {
+	//https://stackoverflow.com/questions/4394079/structs-that-refer-to-each-other
+	struct s_arg	*arg;
+
 	pthread_t 		ph;
 	int				id;
 	pthread_mutex_t eat_mutex;
