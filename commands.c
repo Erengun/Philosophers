@@ -13,7 +13,7 @@
 //TODO: Take_forks, Release_forks, Eat_pasta functions
 #include "phil.h"
 
-void take_forks(t_philo *philo)
+void	take_forks(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->arg->forks[philo->l_fork]);
 	print_message(philo, FORK);
@@ -21,7 +21,7 @@ void take_forks(t_philo *philo)
 	print_message(philo, FORK);
 }
 
-void eat_pasta(t_philo *philo)
+void	eat_pasta(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->eat_mutex);
 	philo->is_eating = 1;
@@ -34,7 +34,7 @@ void eat_pasta(t_philo *philo)
 	pthread_mutex_unlock(&philo->arg->arg_mutex);
 }
 
-void release_forks(t_philo *philo)
+void	release_forks(t_philo *philo)
 {
 	print_message(philo, SLEEP);
 	pthread_mutex_unlock(&philo->arg->forks[philo->l_fork]);

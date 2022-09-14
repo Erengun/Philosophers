@@ -12,10 +12,10 @@
 
 #include "phil.h"
 
-void 	*start_routine(void *philo_t)
+void	*start_routine(void *philo_t)
 {
 	t_philo		*philo;
-	pthread_t 	pid;
+	pthread_t	pid;
 
 	philo = (t_philo *)philo_t;
 	philo->last_eat = get_tick_count();
@@ -35,9 +35,9 @@ void 	*start_routine(void *philo_t)
 
 void	*eat_counter(void *arg_t)
 {
-	t_arg 	*arg;
-	int 	i;
-	int 	total;
+	t_arg	*arg;
+	int		i;
+	int		total;
 
 	arg = (t_arg *)arg_t;
 	total = 0;
@@ -52,10 +52,10 @@ void	*eat_counter(void *arg_t)
 	return (NULL);
 }
 
-void 	create_thread(t_arg *arg)
+void	create_thread(t_arg *arg)
 {
 	int			i;
-	pthread_t 	pid;
+	pthread_t	pid;
 	void		*philo;
 
 	philo = (void **)(&arg->philo);
@@ -85,9 +85,9 @@ void	ft_error(char *msg, int flag, t_arg *arg)
 	exit(ERROR);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	t_arg *arg;
+	t_arg	*arg;
 
 	arg = malloc(sizeof(t_arg));
 	arg->philo = malloc(sizeof(t_philo));
@@ -98,5 +98,5 @@ int main(int ac, char **av)
 		ft_error("Arg Error", 1, arg);
 	mutex_init(arg);
 	create_thread(arg);
-	return 0;
+	return (0);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   phil.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/14 16:40:24 by egun              #+#    #+#             */
+/*   Updated: 2022/09/14 18:28:03 by egun             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHIL_H
 # define PHIL_H
 
@@ -19,29 +31,29 @@
 
 typedef long long	t_long;
 
-struct s_arg;
+struct				s_arg;
 
 typedef struct s_philo
 {
 	struct s_arg	*arg;
 
-	pthread_t 		ph;
+	pthread_t		ph;
 	int				id;
-	pthread_mutex_t eat_mutex;
-	pthread_mutex_t print_mutex;
-	int 			is_eating;
+	pthread_mutex_t	eat_mutex;
+	pthread_mutex_t	print_mutex;
+	int				is_eating;
 	int				eat_number;
 	int				max_eat;
 	t_long			time_to_die;
-	int 			l_fork;
-	int 			r_fork;
+	int				l_fork;
+	int				r_fork;
 	t_long			last_eat;
 	t_long			dead_limit;
 }	t_philo;
 
 typedef struct s_arg
 {
-	t_philo *philo;
+	t_philo	*philo;
 	t_long	total_philos;
 	t_long	count_philos;
 	t_long	time_to_die;
@@ -50,13 +62,13 @@ typedef struct s_arg
 	t_long	eat_limit;
 	t_long	eat_count;
 	t_long	start_time;
-	pthread_mutex_t *forks;
-	pthread_mutex_t boss;
-	pthread_mutex_t arg_mutex;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	boss;
+	pthread_mutex_t	arg_mutex;
 }	t_arg;
 
-int			av_init(t_arg *arg, char** av, int ac);
-int 		ft_arginit(char *str, long long *res);
+int			av_init(t_arg *arg, char **av, int ac);
+int			ft_arginit(char *str, long long *res);
 t_long		get_tick_count(void);
 int			destroy(t_arg *arg);
 void		ft_error(char *msg, int flag, t_arg *arg);

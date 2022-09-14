@@ -14,7 +14,7 @@
 
 void	philo_init(t_arg *arg)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < arg->total_philos)
@@ -39,14 +39,15 @@ void	mutex_init(t_arg *arg)
 	i = -1;
 	pthread_mutex_init(&arg->boss, NULL);
 	pthread_mutex_init(&arg->arg_mutex, NULL);
-	arg->forks = (pthread_mutex_t *)malloc(sizeof(arg->forks) * arg->total_philos);
+	arg->forks = (pthread_mutex_t *)malloc(sizeof(arg->forks) \
+			* arg->total_philos);
 	if (!arg->forks)
 		ft_error("There is an error occured while allocating", 1, arg);
 	while (++i < arg->total_philos)
 		pthread_mutex_init(&arg->forks[i], NULL);
 }
 
-int av_init(t_arg *arg, char** av, int ac)
+int	av_init(t_arg *arg, char **av, int ac)
 {
 	if (!arg && !arg->philo)
 		return (ERROR);
