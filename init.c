@@ -6,7 +6,7 @@
 /*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 16:12:07 by egun              #+#    #+#             */
-/*   Updated: 2022/09/14 18:16:10 by egun             ###   ########.fr       */
+/*   Updated: 2022/09/15 20:00:35 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,37 @@ int	av_init(t_arg *arg, char **av, int ac)
 		return (ERROR);
 	if (ft_arginit(av[4], &arg->time_to_sleep) == ERROR)
 		return (ERROR);
-	arg->eat_limit = -1;
 	if (ac == 6 && ft_arginit(av[5], &arg->eat_limit) == ERROR)
 		return (ERROR);
+	else
+		arg->eat_limit = -1;
 	if (arg->time_to_die < 1 || arg->time_to_eat < 1 || arg->time_to_sleep < 1
 		|| arg->total_philos < 1 || (ac == 6 && arg->eat_limit < 1))
 		ft_error("Error: arguments", 1, arg);
 	return (31);
+}
+
+void	create_thread(t_arg *arg)
+{
+	int			i;
+	pthread_t	pid;
+	void		*philo;
+
+	philo = (void **)(&arg->philo);
+	arg->start_time = get_tick_count();
+	if (arg->eat_limit != -1)
+	{
+		if (pthread_create(&pid, NULL, &eat_counter, (void *)arg) != 0)
+			ft_error("Thread error", 1, arg);
+		pthread_detach(pid);
+	}
+	i = -1;
+	while (++i < arg->total_philos)
+	{
+		philo = (void *)&arg->philo[i];
+		if (pthread_create(&pid, NULL, &start_routine, philo) != 0)
+			ft_error("Thread error as usual", 1, arg);
+		pthread_detach(pid);
+		usleep(100);
+	}
 }

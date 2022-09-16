@@ -76,4 +76,3 @@ int	ft_arginit(char *str, long long *res)
 	}
 	return ((int)res);
 }
-

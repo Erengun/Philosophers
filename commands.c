@@ -6,11 +6,10 @@
 /*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 15:55:45 by egun              #+#    #+#             */
-/*   Updated: 2022/09/14 20:14:15 by egun             ###   ########.fr       */
+/*   Updated: 2022/09/16 19:05:39 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//TODO: Take_forks, Release_forks, Eat_pasta functions
 #include "phil.h"
 
 void	take_forks(t_philo *philo)

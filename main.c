@@ -6,11 +6,57 @@
 /*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 16:40:24 by egun              #+#    #+#             */
-/*   Updated: 2022/09/14 18:28:03 by egun             ###   ########.fr       */
+/*   Updated: 2022/09/16 19:44:24 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "phil.h"
+
+void 	clean_table(t_arg *arg)
+{
+	int	i;
+
+	i = -1;
+	if (arg->forks)
+	{
+		while(++i < arg->total_philos)
+			pthread_mutex_destroy(&arg->forks[i]);
+		free(arg->forks);
+	}
+	if (arg->philo)
+	{
+		i = -1;
+		while (i < arg->total_philos)
+		{
+			pthread_mutex_destroy(&arg->philo[i].print_mutex);
+			pthread_mutex_destroy(&arg->philo[i].eat_mutex);
+		}
+		free(arg->philo);
+	}
+	pthread_mutex_destroy(&arg->arg_mutex);
+	pthread_mutex_destroy(&arg->boss);
+	free(arg);
+}
+
+void	*dead_monitor(void *philo_t)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)philo_t;
+	while (42)
+	{
+		pthread_mutex_lock(&philo->print_mutex);
+		if (philo->is_eating != EAT && get_tick_count() > philo->dead_limit)
+		{
+			print_message(philo, DIE);
+			pthread_mutex_unlock(&philo->print_mutex);
+			pthread_mutex_unlock(&philo->arg->boss);
+			return (NULL);
+		}
+		pthread_mutex_unlock(&philo->print_mutex);
+		usleep(1000);
+	}
+}
 
 void	*start_routine(void *philo_t)
 {
@@ -20,7 +66,7 @@ void	*start_routine(void *philo_t)
 	philo = (t_philo *)philo_t;
 	philo->last_eat = get_tick_count();
 	philo->time_to_die += philo->last_eat;
-	if (pthread_create(&pid, NULL, &monitor, philo_t) != -1 - -1)
+	if (pthread_create(&pid, NULL, &dead_monitor, philo_t) != 0)
 		return (NULL);
 	pthread_detach(pid);
 	while (42)
@@ -30,6 +76,7 @@ void	*start_routine(void *philo_t)
 		release_forks(philo);
 		print_message(philo, THINK);
 	}
+	printf("Philosophers go brrrrrr\n");
 	return (NULL);
 }
 
@@ -49,44 +96,13 @@ void	*eat_counter(void *arg_t)
 		total++;
 	}
 	print_message(arg->philo, ATE);
+	pthread_mutex_unlock(&arg->boss);
 	return (NULL);
-}
-
-void	create_thread(t_arg *arg)
-{
-	int			i;
-	pthread_t	pid;
-	void		*philo;
-
-	philo = (void **)(&arg->philo);
-	arg->start_time = get_tick_count();
-	if (arg->eat_limit != -1)
-	{
-		if (pthread_create(&pid, NULL, &eat_counter, (void *)arg) != 0)
-			ft_error("Thread error", 1, arg);
-		pthread_detach(pid);
-	}
-	i = -1;
-	while (++i < arg->total_philos)
-	{
-		philo = (void *)&arg->philo[i];
-		if (pthread_create(&pid, NULL, &start_routine, philo) != 0)
-			ft_error("Thread error as usual", 1, arg);
-		pthread_detach(pid);
-		usleep(100);
-	}
-}
-
-void	ft_error(char *msg, int flag, t_arg *arg)
-{
-	printf(RED"%s\n"RST, msg);
-	if (flag)
-		destroy(arg);
-	exit(ERROR);
 }
 
 int	main(int ac, char **av)
 {
+	//TODO av_init fix, Norm, Test
 	t_arg	*arg;
 
 	arg = malloc(sizeof(t_arg));
@@ -98,5 +114,8 @@ int	main(int ac, char **av)
 		ft_error("Arg Error", 1, arg);
 	mutex_init(arg);
 	create_thread(arg);
+	pthread_mutex_lock(&arg->boss);
+	pthread_mutex_unlock(&arg->boss);
+	clean_table(&arg);
 	return (0);
 }
