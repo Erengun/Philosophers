@@ -6,7 +6,7 @@
 /*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 21:50:26 by egun              #+#    #+#             */
-/*   Updated: 2022/09/17 19:15:44 by egun             ###   ########.fr       */
+/*   Updated: 2022/09/09 14:06:59 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,16 @@
 
 t_long	get_tick_count(void)
 {
-	static struct timeval	tv;
+	struct timeval	time;
 
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * (uint64_t)1000) + (tv.tv_usec / 1000));
+	gettimeofday(&time, NULL);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
 int	destroy(t_arg *arg)
 {
 	free(arg->philo);
+	free(arg->mutex);
 	free(arg);
 	return (0);
 }
@@ -59,14 +60,19 @@ long long	ft_atol(const char *str)
 	return (number);
 }
 
-t_long	ft_arginit(char *str)
+int	ft_arginit(char *str, long long *res)
 {
-	t_long	res;
-
 	if (!str)
 		return (ERROR);
-	res = ft_atol(str);
-	if (res > __INT_MAX__)
-		return (ERROR);
-	return (res);
+	*res = 0;
+	while (*str)
+	{
+		if (!(*str >= '0' && *str <= '9'))
+			return (ERROR);
+		*res = ft_atol(str);
+		if (*res > __INT_MAX__)
+			return (ERROR);
+		str++;
+	}
+	return ((int)res);
 }

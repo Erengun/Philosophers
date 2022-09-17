@@ -6,7 +6,7 @@
 /*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 16:40:24 by egun              #+#    #+#             */
-/*   Updated: 2022/09/17 17:42:32 by egun             ###   ########.fr       */
+/*   Updated: 2022/09/15 13:46:00 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_arg
 {
 	t_philo			*philo;
 	t_long			total_philos;
+	t_long			count_philos;
 	t_long			time_to_die;
 	t_long			time_to_eat;
 	t_long			time_to_sleep;
@@ -66,7 +67,7 @@ typedef struct s_arg
 }	t_arg;
 
 int			av_init(t_arg *arg, char **av, int ac);
-t_long		ft_arginit(char *str);
+int			ft_arginit(char *str, long long *res);
 t_long		get_tick_count(void);
 int			destroy(t_arg *arg);
 void		ft_error(char *msg, int flag, t_arg *arg);

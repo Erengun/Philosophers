@@ -6,7 +6,7 @@
 /*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 16:40:24 by egun              #+#    #+#             */
-/*   Updated: 2022/09/17 19:25:52 by egun             ###   ########.fr       */
+/*   Updated: 2022/09/16 19:44:24 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ void	*start_routine(void *philo_t)
 	while (42)
 	{
 		take_forks(philo);
-		printf("Philosophers go brrrrrr\n");
 		eat_pasta(philo);
 		release_forks(philo);
 		print_message(philo, THINK);
 	}
+	printf("Philosophers go brrrrrr\n");
 	return (NULL);
 }
 
@@ -113,7 +113,6 @@ int	main(int ac, char **av)
 	if (av_init(arg, av, ac) == ERROR)
 		ft_error("Arg Error", 1, arg);
 	mutex_init(arg);
-	printf("done\n");
 	create_thread(arg);
 	pthread_mutex_lock(&arg->boss);
 	pthread_mutex_unlock(&arg->boss);

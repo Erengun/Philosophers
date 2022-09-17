@@ -6,7 +6,7 @@
 /*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 16:12:07 by egun              #+#    #+#             */
-/*   Updated: 2022/09/17 19:24:59 by egun             ###   ########.fr       */
+/*   Updated: 2022/09/15 20:00:35 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,19 @@ int	av_init(t_arg *arg, char **av, int ac)
 {
 	if (!arg && !arg->philo)
 		return (ERROR);
-	//printf("%s, %s, %s, %s", av[1], av[2], av[3], av[4]);
-	arg->total_philos = ft_arginit(av[1]);
-	arg->time_to_die = ft_arginit(av[2]);
-	arg->time_to_eat = ft_arginit(av[3]);
-	arg->time_to_sleep = ft_arginit(av[4]);
-	if (ac == 6)
-		arg->eat_limit = ft_arginit(av[5]);
+	if (ft_arginit(av[1], &arg->total_philos) == ERROR)
+		return (ERROR);
+	if (ft_arginit(av[2], &arg->time_to_die) == ERROR)
+		return (ERROR);
+	if (ft_arginit(av[3], &arg->time_to_eat) == ERROR)
+		return (ERROR);
+	if (ft_arginit(av[4], &arg->time_to_sleep) == ERROR)
+		return (ERROR);
+	if (ac == 6 && ft_arginit(av[5], &arg->eat_limit) == ERROR)
+		return (ERROR);
 	else
 		arg->eat_limit = -1;
-	if (arg->time_to_die < 2 || arg->time_to_eat < 1 || arg->time_to_sleep < 1
+	if (arg->time_to_die < 1 || arg->time_to_eat < 1 || arg->time_to_sleep < 1
 		|| arg->total_philos < 1 || (ac == 6 && arg->eat_limit < 1))
 		ft_error("Error: arguments", 1, arg);
 	return (31);
@@ -72,6 +75,8 @@ void	create_thread(t_arg *arg)
 	pthread_t	pid;
 	void		*philo;
 
+	philo = (void **)(&arg->philo);
+	arg->start_time = get_tick_count();
 	if (arg->eat_limit != -1)
 	{
 		if (pthread_create(&pid, NULL, &eat_counter, (void *)arg) != 0)
@@ -85,7 +90,6 @@ void	create_thread(t_arg *arg)
 		if (pthread_create(&pid, NULL, &start_routine, philo) != 0)
 			ft_error("Thread error as usual", 1, arg);
 		pthread_detach(pid);
-		printf("OHAAAA IS THIS KID TURKO\n");
 		usleep(100);
 	}
 }
