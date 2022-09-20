@@ -6,7 +6,7 @@
 /*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 16:40:24 by egun              #+#    #+#             */
-/*   Updated: 2022/09/17 19:25:52 by egun             ###   ########.fr       */
+/*   Updated: 2022/09/20 15:37:23 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,13 @@ void	*start_routine(void *philo_t)
 
 	philo = (t_philo *)philo_t;
 	philo->last_eat = get_tick_count();
-	philo->time_to_die += philo->last_eat;
+	philo->dead_limit = philo->last_eat + philo->arg->time_to_die;
 	if (pthread_create(&pid, NULL, &dead_monitor, philo_t) != 0)
 		return (NULL);
 	pthread_detach(pid);
 	while (42)
 	{
 		take_forks(philo);
-		printf("Philosophers go brrrrrr\n");
 		eat_pasta(philo);
 		release_forks(philo);
 		print_message(philo, THINK);
@@ -103,20 +102,16 @@ void	*eat_counter(void *arg_t)
 int	main(int ac, char **av)
 {
 	//TODO av_init fix, Norm, Test
-	t_arg	*arg;
+	t_arg	arg;
 
-	arg = malloc(sizeof(t_arg));
-	arg->philo = malloc(sizeof(t_philo));
-	arg->eat_limit = -1;
 	if (ac != 6 && ac != 5)
 		return (-1);
-	if (av_init(arg, av, ac) == ERROR)
-		ft_error("Arg Error", 1, arg);
-	mutex_init(arg);
-	printf("done\n");
-	create_thread(arg);
-	pthread_mutex_lock(&arg->boss);
-	pthread_mutex_unlock(&arg->boss);
-	clean_table(arg);
+	if (init(&arg, av, ac) == ERROR)
+		ft_error("Arg Error", 1, &arg);
+	if (create_thread(&arg) == ERROR)
+		ft_error("Thread error", 1, &arg);
+	pthread_mutex_lock(&arg.boss);
+	pthread_mutex_unlock(&arg.boss);
+	clean_table(&arg);
 	return (0);
 }

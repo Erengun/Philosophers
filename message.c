@@ -6,7 +6,7 @@
 /*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 16:41:02 by egun              #+#    #+#             */
-/*   Updated: 2022/09/17 14:00:22 by egun             ###   ########.fr       */
+/*   Updated: 2022/09/20 15:29:57 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_error(char *msg, int flag, t_arg *arg)
 	printf("%s\n", msg);
 	(void)msg;
 	if (flag)
-		destroy(arg);
+		clean_table(arg);
 	exit(ERROR);
 }
 
@@ -40,7 +40,6 @@ void	print_message(t_philo *philo, int type)
 {
 	static int	finish = 0;
 
-	printf("Philosophers go brasdrrrrr\n");
 	pthread_mutex_lock(&philo->print_mutex);
 	if (!finish)
 		printf("%d\t%s", philo->id + 1, type_message(type));
