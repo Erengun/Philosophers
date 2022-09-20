@@ -6,7 +6,7 @@
 /*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 16:41:02 by egun              #+#    #+#             */
-/*   Updated: 2022/09/20 15:29:57 by egun             ###   ########.fr       */
+/*   Updated: 2022/09/20 16:18:35 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	print_message(t_philo *philo, int type)
 {
 	static int	finish = 0;
 
-	pthread_mutex_lock(&philo->print_mutex);
+	pthread_mutex_lock(&philo->arg->print_mutex);
 	if (!finish)
-		printf("%d\t%s", philo->id + 1, type_message(type));
+		printf("%lld\t%d %s", (get_tick_count() - philo->arg->start_time) , philo->id + 1, type_message(type));
 	if (type == DIE)
 		finish = 1;
-	pthread_mutex_unlock(&philo->print_mutex);
+	pthread_mutex_unlock(&philo->arg->print_mutex);
 }

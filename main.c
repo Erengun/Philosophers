@@ -6,7 +6,7 @@
 /*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 16:40:24 by egun              #+#    #+#             */
-/*   Updated: 2022/09/20 15:37:23 by egun             ###   ########.fr       */
+/*   Updated: 2022/09/20 20:09:44 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,13 @@ void 	clean_table(t_arg *arg)
 		i = -1;
 		while (i < arg->total_philos)
 		{
-			pthread_mutex_destroy(&arg->philo[i].print_mutex);
+			pthread_mutex_destroy(&arg->philo[i].mutex);
 			pthread_mutex_destroy(&arg->philo[i].eat_mutex);
 		}
 		free(arg->philo);
 	}
-	pthread_mutex_destroy(&arg->arg_mutex);
+	pthread_mutex_destroy(&arg->print_mutex);
 	pthread_mutex_destroy(&arg->boss);
-	free(arg);
 }
 
 void	*dead_monitor(void *philo_t)
@@ -45,15 +44,15 @@ void	*dead_monitor(void *philo_t)
 	philo = (t_philo *)philo_t;
 	while (42)
 	{
-		pthread_mutex_lock(&philo->print_mutex);
+		pthread_mutex_lock(&philo->mutex);
 		if (philo->is_eating != EAT && get_tick_count() > philo->dead_limit)
 		{
 			print_message(philo, DIE);
-			pthread_mutex_unlock(&philo->print_mutex);
 			pthread_mutex_unlock(&philo->arg->boss);
+			pthread_mutex_unlock(&philo->mutex);
 			return (NULL);
 		}
-		pthread_mutex_unlock(&philo->print_mutex);
+		pthread_mutex_unlock(&philo->mutex);
 		usleep(1000);
 	}
 }
@@ -83,10 +82,11 @@ void	*eat_counter(void *arg_t)
 {
 	t_arg	*arg;
 	int		i;
-	int		total;
+	t_long 	total;
 
 	arg = (t_arg *)arg_t;
 	total = 0;
+	arg->eat_limit = arg->philo[0].max_eat;
 	while (total < arg->eat_limit)
 	{
 		i = -1;
@@ -96,6 +96,7 @@ void	*eat_counter(void *arg_t)
 	}
 	print_message(arg->philo, ATE);
 	pthread_mutex_unlock(&arg->boss);
+	printf("AAAAAAAAAAAAAAAA\n");
 	return (NULL);
 }
 
@@ -113,5 +114,6 @@ int	main(int ac, char **av)
 	pthread_mutex_lock(&arg.boss);
 	pthread_mutex_unlock(&arg.boss);
 	clean_table(&arg);
+	printf("\nBBBBBBBBBBBBBBB\n");
 	return (0);
 }

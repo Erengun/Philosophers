@@ -6,7 +6,7 @@
 /*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 15:55:45 by egun              #+#    #+#             */
-/*   Updated: 2022/09/17 19:26:25 by egun             ###   ########.fr       */
+/*   Updated: 2022/09/20 16:18:12 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	take_forks(t_philo *philo)
 
 void	eat_pasta(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->eat_mutex);
+	pthread_mutex_lock(&philo->mutex);
 	philo->is_eating = 1;
 	philo->last_eat = get_tick_count();
 	philo->dead_limit = philo->last_eat + philo->time_to_die;
@@ -30,7 +30,7 @@ void	eat_pasta(t_philo *philo)
 	usleep(philo->arg->time_to_eat * 1000);
 	philo->eat_number++;
 	pthread_mutex_unlock(&philo->eat_mutex);
-	pthread_mutex_unlock(&philo->arg->arg_mutex);
+	pthread_mutex_unlock(&philo->mutex);
 }
 
 void	release_forks(t_philo *philo)

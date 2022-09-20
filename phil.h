@@ -6,7 +6,7 @@
 /*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 16:40:24 by egun              #+#    #+#             */
-/*   Updated: 2022/09/20 15:34:33 by egun             ###   ########.fr       */
+/*   Updated: 2022/09/20 15:54:34 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_philo
 	struct s_arg	*arg;
 	int				id;
 	pthread_mutex_t	eat_mutex; // eat_m
-	pthread_mutex_t	print_mutex; // mutex
+	pthread_mutex_t	mutex; // mutex
 	int				max_eat;
 	int				is_eating;
 	int				eat_number; //eat_count
@@ -61,7 +61,7 @@ typedef struct s_arg
 	t_long			start_time;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	boss; // somebody_dead_m
-	pthread_mutex_t	arg_mutex; // write_m
+	pthread_mutex_t print_mutex; // write_m
 }	t_arg;
 
 int			init(t_arg *arg, char **av, int ac);
