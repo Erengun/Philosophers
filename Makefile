@@ -1,29 +1,62 @@
-NAME = philo
+#  |  |  ___ \    \  |         |
+#  |  |     ) |  |\/ |   _  |  |  /   _ 
+# ___ __|  __/   |   |  (   |    <    __/ 
+#    _|  _____| _|  _| \__,_| _|\_\ \___|
+#                              by jcluzet
+################################################################################
+#                                     CONFIG                                   #
+################################################################################
 
-SRCS = main.c error.c utils.c init.c time.c threading.c
+NAME        := philo
+CC        := gcc
+FLAGS    := -Wall -Wextra -Werror 
+################################################################################
+#                                 PROGRAM'S SRCS                               #
+################################################################################
 
-OBJS = $(SRCS:.c=.o)
+SRCS        :=      commands.c \
+                          init.c \
+                          main.c \
+                          message.c \
+                          utils.c \
+                          
+OBJS        := $(SRCS:.c=.o)
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+.c.o:
+	${CC} ${FLAGS} -c $< -o ${<:.c=.o}
 
-TFLAG = -pthread
+################################################################################
+#                                  Makefile  objs                              #
+################################################################################
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
 
-all: $(NAME)
+CLR_RMV		:= \033[0m
+RED		    := \033[1;31m
+GREEN		:= \033[1;32m
+YELLOW		:= \033[1;33m
+BLUE		:= \033[1;34m
+CYAN 		:= \033[1;36m
+RM		    := rm -f
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(TFLAG) -o $(NAME)
+${NAME}:	${OBJS}
+			@echo "$(GREEN)Compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
+			${CC} ${FLAGS} -o ${NAME} ${OBJS}
+			@echo "$(GREEN)$(NAME) created[0m ✔️"
 
-clean: 
-	rm -f $(OBJS)
+all:		${NAME}
 
-fclean: clean
-	rm -f $(NAME)
+bonus:		all
 
-re: fclean all
+clean:
+			@ ${RM} *.o */*.o */*/*.o
+			@ echo "$(RED)Deleting $(CYAN)$(NAME) $(CLR_RMV)objs ✔️"
 
-norm:
-	norminette $(SRCS) phil.h
+fclean:		clean
+			@ ${RM} ${NAME}
+			@ echo "$(RED)Deleting $(CYAN)$(NAME) $(CLR_RMV)binary ✔️"
+
+re:			fclean all
+
+.PHONY:		all clean fclean re
+
+
