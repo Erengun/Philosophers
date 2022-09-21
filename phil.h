@@ -6,7 +6,7 @@
 /*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 16:40:24 by egun              #+#    #+#             */
-/*   Updated: 2022/09/20 15:54:34 by egun             ###   ########.fr       */
+/*   Updated: 2022/09/21 16:32:02 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int			init(t_arg *arg, char **av, int ac);
 void		philo_init(t_arg *arg);
 t_long		ft_arginit(char *str);
 t_long		get_tick_count(void);
-void		ft_error(char *msg, int flag, t_arg *arg);
+int			ft_error(char *msg, int flag, t_arg *arg);
 void		mutex_init(t_arg *arg);
 int			create_thread(t_arg *arg);
 void		print_message(t_philo *philo, int type);

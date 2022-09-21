@@ -6,7 +6,7 @@
 /*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 16:40:24 by egun              #+#    #+#             */
-/*   Updated: 2022/09/21 18:04:56 by egun             ###   ########.fr       */
+/*   Updated: 2022/09/21 20:14:58 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void 	clean_table(t_arg *arg)
 	{
 		while(++i < arg->total_philos)
 			pthread_mutex_destroy(&arg->forks[i]);
-		free(arg->forks);
+		if (arg->forks)
+			free(arg->forks);
 	}
 	if (arg->philo)
 	{
@@ -31,7 +32,8 @@ void 	clean_table(t_arg *arg)
 			pthread_mutex_destroy(&arg->philo[i].mutex);
 			pthread_mutex_destroy(&arg->philo[i].eat_mutex);
 		}
-		free(arg->philo);
+		if (arg->philo)
+			free(arg->philo);
 	}
 	pthread_mutex_destroy(&arg->print_mutex);
 	pthread_mutex_destroy(&arg->boss);
@@ -45,7 +47,7 @@ void	*dead_monitor(void *philo_t)
 	while (42)
 	{
 		pthread_mutex_lock(&philo->mutex);
-		if (philo->is_eating != EAT && get_tick_count() > philo->dead_limit)
+		if (get_tick_count() > philo->dead_limit)
 		{
 			print_message(philo, DIE);
 			pthread_mutex_unlock(&philo->arg->boss);
@@ -107,9 +109,9 @@ int	main(int ac, char **av)
 	if (ac != 6 && ac != 5)
 		return (-1);
 	if (init(&arg, av, ac) == ERROR)
-		ft_error("Arg Error", 1, &arg);
+		return (ft_error("Arg Error", 0, &arg));
 	if (create_thread(&arg) == ERROR)
-		ft_error("Thread error", 1, &arg);
+		return (ft_error("Thread error", 1, &arg));
 	pthread_mutex_lock(&arg.boss);
 	pthread_mutex_unlock(&arg.boss);
 	clean_table(&arg);

@@ -6,19 +6,19 @@
 /*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 16:41:02 by egun              #+#    #+#             */
-/*   Updated: 2022/09/20 16:18:35 by egun             ###   ########.fr       */
+/*   Updated: 2022/09/21 20:15:25 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "phil.h"
 
-void	ft_error(char *msg, int flag, t_arg *arg)
+int	ft_error(char *msg, int flag, t_arg *arg)
 {
 	printf("%s\n", msg);
 	(void)msg;
 	if (flag)
 		clean_table(arg);
-	exit(ERROR);
+	return (ERROR);
 }
 
 char	*type_message(int type)
