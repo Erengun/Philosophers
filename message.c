@@ -43,7 +43,7 @@ void	print_message(t_philo *philo, int type)
 	pthread_mutex_lock(&philo->arg->print_mutex);
 	if (!finish)
 		printf("%lld\t%d %s", (get_tick_count() - philo->arg->start_time) , philo->id + 1, type_message(type));
-	if (type == DIE)
+	if (type == DIE || type == ATE)
 		finish = 1;
 	pthread_mutex_unlock(&philo->arg->print_mutex);
 }

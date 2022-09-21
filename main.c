@@ -6,7 +6,7 @@
 /*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 16:40:24 by egun              #+#    #+#             */
-/*   Updated: 2022/09/20 20:09:44 by egun             ###   ########.fr       */
+/*   Updated: 2022/09/21 18:04:56 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void 	clean_table(t_arg *arg)
 	if (arg->philo)
 	{
 		i = -1;
-		while (i < arg->total_philos)
+		while (++i < arg->total_philos)
 		{
 			pthread_mutex_destroy(&arg->philo[i].mutex);
 			pthread_mutex_destroy(&arg->philo[i].eat_mutex);
@@ -96,7 +96,6 @@ void	*eat_counter(void *arg_t)
 	}
 	print_message(arg->philo, ATE);
 	pthread_mutex_unlock(&arg->boss);
-	printf("AAAAAAAAAAAAAAAA\n");
 	return (NULL);
 }
 
@@ -114,6 +113,5 @@ int	main(int ac, char **av)
 	pthread_mutex_lock(&arg.boss);
 	pthread_mutex_unlock(&arg.boss);
 	clean_table(&arg);
-	printf("\nBBBBBBBBBBBBBBB\n");
 	return (0);
 }

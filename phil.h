@@ -57,7 +57,6 @@ typedef struct s_arg
 	t_long			time_to_eat;
 	t_long			time_to_sleep;
 	t_long			eat_limit;
-	t_long			eat_count;
 	t_long			start_time;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	boss; // somebody_dead_m
