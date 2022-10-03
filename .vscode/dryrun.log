@@ -1,0 +1,33 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/spike/Philosophers42/philo'
+mkdir -p .objs
+clang -Wall -Werror -Wextra -g -fsanitize=address -I./includes -c sources/actions.c -o .objs/actions.o
+echo "\033[0;32m[OK]\033[0m    \033[0;38;5;199mCompiling\033[0m actions.c"
+ 
+mkdir -p .objs
+clang -Wall -Werror -Wextra -g -fsanitize=address -I./includes -c sources/handling_errors.c -o .objs/handling_errors.o
+echo "\033[0;32m[OK]\033[0m    \033[0;38;5;199mCompiling\033[0m handling_errors.c"
+mkdir -p .objs
+clang -Wall -Werror -Wextra -g -fsanitize=address -I./includes -c sources/handling_forks.c -o .objs/handling_forks.o
+echo "\033[0;32m[OK]\033[0m    \033[0;38;5;199mCompiling\033[0m handling_forks.c"
+mkdir -p .objs
+clang -Wall -Werror -Wextra -g -fsanitize=address -I./includes -c sources/handling_philos.c -o .objs/handling_philos.o
+echo "\033[0;32m[OK]\033[0m    \033[0;38;5;199mCompiling\033[0m handling_philos.c"
+mkdir -p .objs
+clang -Wall -Werror -Wextra -g -fsanitize=address -I./includes -c sources/handling_threads.c -o .objs/handling_threads.o
+echo "\033[0;32m[OK]\033[0m    \033[0;38;5;199mCompiling\033[0m handling_threads.c"
+mkdir -p .objs
+clang -Wall -Werror -Wextra -g -fsanitize=address -I./includes -c sources/handling_time.c -o .objs/handling_time.o
+echo "\033[0;32m[OK]\033[0m    \033[0;38;5;199mCompiling\033[0m handling_time.c"
+mkdir -p .objs
+clang -Wall -Werror -Wextra -g -fsanitize=address -I./includes -c sources/main.c -o .objs/main.o
+echo "\033[0;32m[OK]\033[0m    \033[0;38;5;199mCompiling\033[0m main.c"
+mkdir -p .objs
+clang -Wall -Werror -Wextra -g -fsanitize=address -I./includes -c sources/philo_utils.c -o .objs/philo_utils.o
+echo "\033[0;32m[OK]\033[0m    \033[0;38;5;199mCompiling\033[0m philo_utils.c"
+mkdir -p .objs
+clang -Wall -Werror -Wextra -g -fsanitize=address -I./includes -c sources/routine.c -o .objs/routine.o
+echo "\033[0;32m[OK]\033[0m    \033[0;38;5;199mCompiling\033[0m routine.c"
+clang  .objs/actions.o  .objs/handling_errors.o  .objs/handling_forks.o  .objs/handling_philos.o  .objs/handling_threads.o  .objs/handling_time.o  .objs/main.o  .objs/philo_utils.o  .objs/routine.o -I./includes -Wall -Werror -Wextra -g -fsanitize=address -pthread -o philo
+make: Leaving directory '/home/spike/Philosophers42/philo'
+ 
