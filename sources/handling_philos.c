@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handling_philos.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anolivei <anolivei@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/15 20:01:05 by anolivei          #+#    #+#             */
-/*   Updated: 2021/11/30 00:54:15 by anolivei         ###   ########.fr       */
+/*   Created: 2022/10/07 15:21:10 by egun              #+#    #+#             */
+/*   Updated: 2022/10/07 15:21:10 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	create_philos(t_main *main)
 	int	i;
 	int	j;
 
-	main->philo = malloc(sizeof(t_philo) * (main->input.num_philo + 1));
+	main->philo = malloc(sizeof(t_philo) * main->input.num_philo);
 	if (main->philo == NULL)
 		return (FALSE);
 	i = 0;

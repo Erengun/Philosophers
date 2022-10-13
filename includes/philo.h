@@ -32,13 +32,6 @@
 # define B_BLUE "\e[1;34m"
 # define G_CYAN "\e[0;38;5;44m"
 
-# define NUM_ARGS "ERROR: The number of argments must be 4 or 5"
-# define ARG1 "ERROR: There is a mistake in number of philosophers"
-# define ARG2 "ERROR: There is a mistake in time to die"
-# define ARG3 "ERROR: There is a mistake in time to eat"
-# define ARG4 "ERROR: There is a mistake in time to sleep"
-# define ARG5 "ERROR: There is a mistake in number of times each \
-philosopher must eat"
 
 # define EAT "is eating"
 # define SLEEP "is sleeping"
@@ -96,7 +89,6 @@ int			drop_forks(t_main *main, int i);
 */
 int			error_handling(int argc, char **argv, t_main *main);
 int			init_input_struct(int argc, char **argv, t_main *main);
-void		print_args_errors(t_main *main, int argc);
 
 /*
 ** handling_forks.c
@@ -134,8 +126,6 @@ int			just_one_philo(t_main *main);
 ** philo_utils.c
 */
 int			philo_atoi(char *str);
-int			philo_strncmp(const char *s1, const char *s2, size_t n);
-int			philo_strlen(const char *str);
 void		philo_free(t_main *main);
 
 /*

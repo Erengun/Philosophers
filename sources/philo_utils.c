@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anolivei <anolivei@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/20 20:07:45 by anolivei          #+#    #+#             */
-/*   Updated: 2021/11/20 18:15:58 by anolivei         ###   ########.fr       */
+/*   Created: 2022/10/07 15:21:25 by egun              #+#    #+#             */
+/*   Updated: 2022/10/07 15:21:25 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,6 @@ int	philo_atoi(char *str)
 		|| n > INT_MAX)
 		return (0);
 	return (n);
-}
-
-int	philo_strlen(const char *str)
-{
-	int	size;
-
-	size = 0;
-	while (str[size] != '\0')
-	{
-		size++;
-	}
-	return (size);
 }
 
 void	philo_free(t_main *main)

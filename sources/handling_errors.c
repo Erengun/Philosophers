@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handling_errors.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anolivei <anolivei@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/20 21:10:58 by anolivei          #+#    #+#             */
-/*   Updated: 2021/11/21 16:17:15 by anolivei         ###   ########.fr       */
+/*   Created: 2022/10/07 15:20:25 by egun              #+#    #+#             */
+/*   Updated: 2022/10/13 16:34:49 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ int	error_handling(int argc, char **argv, t_main *main)
 {
 	if (init_input_struct(argc, argv, main) == FALSE)
 	{
-		printf("%s%s%s\n", PINK, NUM_ARGS, RESET);
+		printf("%sERROR: The number of arguments must be 4 or 5%s\n", PINK, RESET);
 		return (FALSE);
 	}
 	else
 	{
-		print_args_errors(main, argc);
+		printf("There's an error in input\n");
 		if (!main->input.num_philo || !main->input.time_to_die
 			|| !main->input.time_to_eat || !main->input.time_to_sleep
 			|| (argc == 6 && !main->input.num_of_times_eat))
@@ -47,16 +47,4 @@ int	init_input_struct(int argc, char **argv, t_main *main)
 	return (FALSE);
 }
 
-void	print_args_errors(t_main *main, int argc)
-{
-	if (!main->input.num_philo)
-		printf("%s%s%s\n", PINK, ARG1, RESET);
-	if (!main->input.time_to_die)
-		printf("%s%s%s\n", PINK, ARG2, RESET);
-	if (!main->input.time_to_eat)
-		printf("%s%s%s\n", PINK, ARG3, RESET);
-	if (!main->input.time_to_sleep)
-		printf("%s%s%s\n", PINK, ARG4, RESET);
-	if (argc == 6 && !main->input.num_of_times_eat)
-		printf("%s%s%s\n", PINK, ARG5, RESET);
-}
+

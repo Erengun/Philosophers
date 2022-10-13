@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handling_forks.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anolivei <anolivei@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: egun <egun@student.42istanbul.com.tr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/17 22:12:20 by anolivei          #+#    #+#             */
-/*   Updated: 2021/11/21 16:13:40 by anolivei         ###   ########.fr       */
+/*   Created: 2022/10/07 15:20:59 by egun              #+#    #+#             */
+/*   Updated: 2022/10/07 15:20:59 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	create_forks(t_main *main)
 {
 	int	i;
 
-	main->forks = malloc(sizeof(pthread_mutex_t) * main->input.num_philo + 1);
+	main->forks = malloc(sizeof(pthread_mutex_t) * main->input.num_philo);
 	if (main->forks == NULL)
 		return (FALSE);
 	i = 0;
